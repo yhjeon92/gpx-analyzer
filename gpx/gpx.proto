@@ -1,0 +1,39 @@
+syntax = "proto3";
+
+package gpx;
+
+import "google/protobuf/timestamp.proto";
+
+option go_package = "./";
+
+message Workout {
+  google.protobuf.Timestamp time = 1;
+  string name = 2;
+  map<string, string> meta = 3;
+  repeated Point data = 4;
+//  int32 elapsed = 5;
+//  int32 total_distance = 6;
+}
+
+message Point {
+  google.protobuf.Timestamp time = 1;
+  float latitude = 2;
+  float longitude = 3;
+  float elevation = 4;
+//  float speed = 5;
+//  float distance = 6;
+}
+
+message WorkoutResultView {
+  repeated google.protobuf.Timestamp time = 1;
+  string name = 2;
+  repeated float latitude = 3;
+  repeated float longitude = 4;
+  repeated float elevation = 5;
+  repeated float speed = 6;
+  repeated float distance = 7;
+}
+
+service Analyzer {
+  rpc AnalyzeWorkout(Workout) returns (WorkoutResultView);
+}
